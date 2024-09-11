@@ -10,6 +10,7 @@ module.exports = {
     authService: require('./authService'),
     fileUploadService: require('./fileUploadService'),
     userService: require("./userService"),
-    otpService: require("./otpService")
+    otpService: require("./otpService"),
+    symbolsService: require("./symbolsService")
     // stripeService: require('./stripeService'),
 };

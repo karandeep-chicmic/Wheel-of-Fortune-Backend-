@@ -15,6 +15,7 @@ CONSTANTS.SERVER_TYPES = {
 
 CONSTANTS.USER_ROLES = {
   ADMIN: 1,
+  USER: 2,
 };
 
 CONSTANTS.AVAILABLE_AUTHS = {
@@ -43,6 +44,7 @@ CONSTANTS.DATABASE_VERSIONS = {
 
 CONSTANTS.USER_TYPE = {
   ADMIN: 1,
+  USER: 2,
 };
 
 CONSTANTS.PASSWORD_PATTER_REGEX =
@@ -144,7 +146,8 @@ CONSTANTS.SMTP_CREDENTIALS = {
   PORT: 587,
   USER: "775149001@smtp-brevo.com",
   PASS: "Hrf85YPBzGFZtCq2",
-  USER_FROM: "karandeep.singh@chicmic.co.in"
+  USER_FROM: "karandeep.singh@chicmic.co.in",
 };
+
 
 module.exports = CONSTANTS;

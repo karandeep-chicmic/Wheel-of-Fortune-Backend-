@@ -10,4 +10,5 @@ module.exports = {
   dbVersionModel: require("./dbVersionModel"),
   adminModel: require("./adminModel"),
   otpModel: require("./otpModel"),
+  symbolsModel:  require("./symbolsModel")
 };

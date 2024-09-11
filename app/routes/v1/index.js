@@ -1,12 +1,13 @@
-'use strict';
+"use strict";
 
 /** ******************************
  ********* Import All routes ***********
  ******************************* */
 const v1Routes = [
-  ...require('./serverRoutes'),
+  ...require("./serverRoutes"),
   ...require("./userRoutes"),
-  ...require("./otpRoutes")
+  ...require("./otpRoutes"),
+  ...require("./symbolRoutes"),
 ];
 
 module.exports = v1Routes;

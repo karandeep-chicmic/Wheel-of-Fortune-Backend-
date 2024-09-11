@@ -1,5 +1,9 @@
 module.exports = {
   USER_ALREADY_EXISTS: "User Already exists",
+  SYMBOL_CREATED:"Symbol created successfully",
+  SYMBOL_UPDATED:"Symbol updated successfully",
+  SYMBOL_DELETED:"Symbol deleted successfully",
+  SYMBOL_FETCHED:"Symbol fetched successfully",
   FAILURE: "Failure!!",
   SERVER_IS_WORKING_FINE: "Server is working fine.",
   EMAIL_IS_WORKING_FINE: "Email service is working fine.",

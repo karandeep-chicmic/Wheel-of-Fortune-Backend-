@@ -66,7 +66,7 @@ const validateUser = async (request, authType) => {
 /**
  * function to authenticate user.
  */
-authService.userValidate = (authType) => {
+authService.userValidate = (authType, roleAccess) => {
     return (request, response, next) => {
         validateUser(request, authType).then((isAuthorized) => {
             if (request.user && !request.user.isActive) {

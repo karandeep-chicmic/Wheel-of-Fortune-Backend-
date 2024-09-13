@@ -102,8 +102,9 @@ const defaults = {
     },
     ADMIN: {
         EMAIL: process.env.ADMIN_EMAIL || 'admin@yopmail.com',
-        PASSWORD: process.env.ADMIN_PASS || 'pass123',
+        PASSWORD: process.env.ADMIN_PASS || 'Pass@12345',
         USERNAME: process.env.ADMIN_USERNAME || 'Admin',
+        NAME: process.env.ADMIN_NAME || 'admin'
     },
     PINO: {
         API_KEY: process.env.PINO_API_KEY || 'pino api key',

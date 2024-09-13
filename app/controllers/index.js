@@ -9,5 +9,6 @@ module.exports = {
   serverController: require("./serverController"),
   userController: require("./userController"),
   otpController: require("./otpController"),
-  symbolsController: require("./symbolsController")
+  symbolsController: require("./symbolsController"),
+  fileUploadController:  require("./fileUploadController")
 };

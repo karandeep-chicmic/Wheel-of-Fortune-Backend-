@@ -50,7 +50,7 @@ routeUtils.route = async (app, routes = []) => {
     // }
 
     if (route.auth) {
-      middlewares.push(userAuthentication(rolesAccess));
+      middlewares.push(userAuthentication(route.roleAccess));
     }
 
     app
@@ -62,16 +62,16 @@ routeUtils.route = async (app, routes = []) => {
 
 const userAuthentication = (rolesAccess) => {
   return async (req, res, next) => {
-    console.log("inside Authorize");
-
-    const { token } = req.headers;
+    
+    const token = req?.headers["authorization"]?.split(" ")[1];
 
     if (token) {
       const data = commonFunctions.decryptJwt(token);
 
-      if (rolesAccess.includes(data.role) && rolesAccess) {
-        req.userId = data.userId;
-        req.role = data.role;
+      const findUser = await SERVICES.userService.findOne({ _id: data.id });
+
+      if (rolesAccess && rolesAccess.includes(findUser.role) ) {
+        req.user = findUser;
         next();
       } else {
         throw new Error(

@@ -1,13 +1,10 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable prefer-destructuring */
-/* eslint-disable no-console */
+"use strict";
 
-'use strict';
-
-const MODELS = require('../models');
-const CONFIG = require('../../config')
-const { hashPassword } = require('../utils/utils');
-const CONSTANTS = require('./constants');
+const MODELS = require("../models");
+const CONFIG = require("../../config");
+const { hashPassword } = require("../utils/utils");
+const CONSTANTS = require("./constants");
+const { userService } = require("../services");
 
 const dbMigrations = {};
 
@@ -16,26 +13,31 @@ const dbMigrations = {};
  * @returns
  */
 dbMigrations.migerateDatabase = async () => {
-
   let dbVersion = await MODELS.dbVersionModel.findOne({});
   if (!dbVersion || dbVersion.version < 1) {
     await dbMigrations.createAdmin();
-    dbVersion = await MODELS.dbVersionModel
-      .findOneAndUpdate({}, { version: 1 }, { upsert: true, new: true });
+    dbVersion = await MODELS.dbVersionModel.findOneAndUpdate(
+      {},
+      { version: 1 },
+      { upsert: true, new: true }
+    );
   }
 };
 
 /**
  * Function to create admin
- * @returns 
+ * @returns
  */
 dbMigrations.createAdmin = async () => {
   const data = {
+    name: CONFIG.ADMIN.NAME,
     email: CONFIG.ADMIN.EMAIL,
     password: hashPassword(CONFIG.ADMIN.PASSWORD),
     username: CONFIG.ADMIN.USERNAME,
-  }
-  await MODELS.adminModel(data).save()
+    role: 1,
+    isVerified: true,
+  };
+  await userService.create(data);
   return;
 };
 

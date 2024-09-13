@@ -8,6 +8,7 @@ const v1Routes = [
   ...require("./userRoutes"),
   ...require("./otpRoutes"),
   ...require("./symbolRoutes"),
+  ...require("./fileUploadRoutes")
 ];
 
 module.exports = v1Routes;

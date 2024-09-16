@@ -13,5 +13,7 @@ module.exports = {
   otpService: require("./otpService"),
   symbolsService: require("./symbolsService"),
   wheelService: require("./wheelService"),
+  // gameService: require("./gameService"),
+  rtpService: require("./rtpService"),
   // stripeService: require('./stripeService'),
 };

@@ -12,4 +12,5 @@ module.exports = {
   symbolsController: require("./symbolsController"),
   fileUploadController: require("./fileUploadController"),
   wheelController: require("./wheelController"),
+  gameController: require("./gameController"),
 };

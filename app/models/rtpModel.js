@@ -8,8 +8,8 @@ const { Schema } = MONGOOSE;
 /** *********** RTP Model ********** */
 const rtpSchema = new Schema(
   {
-    totalSpins: { type: String, required: true, default: 0 },
-    wheelId:  {
+    totalSpins: { type: Number, required: true, default: 0 },
+    wheelId: {
       type: MONGOOSE.Schema.Types.ObjectId,
       ref: "wheels",
       required: true,

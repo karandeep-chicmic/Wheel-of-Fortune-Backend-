@@ -464,4 +464,12 @@ commonFunctions.decodeNumberString = (encodedNumber) => {
   return output;
 };
 
+/*
+Function for getting a random object in array inside an array of objects
+*/
+commonFunctions.getRandomObject = (arr) => {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+};
+
 module.exports = commonFunctions;

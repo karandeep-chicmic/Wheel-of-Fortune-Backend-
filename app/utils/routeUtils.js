@@ -50,7 +50,9 @@ routeUtils.route = async (app, routes = []) => {
     // }
 
     if (route.auth) {
-      middlewares.push(userAuthentication(route.roleAccess));
+      middlewares.push(
+        SERVICES.authService.userAuthentication(route.roleAccess)
+      );
     }
 
     app
@@ -58,30 +60,6 @@ routeUtils.route = async (app, routes = []) => {
       [route.method.toLowerCase()](...middlewares, getHandlerMethod(route));
   });
   createSwaggerUIForRoutes(app, routes);
-};
-
-const userAuthentication = (rolesAccess) => {
-  return async (req, res, next) => {
-    
-    const token = req?.headers["authorization"]?.split(" ")[1];
-
-    if (token) {
-      const data = commonFunctions.decryptJwt(token);
-
-      const findUser = await SERVICES.userService.findOne({ _id: data.id });
-
-      if (rolesAccess && rolesAccess.includes(findUser.role) ) {
-        req.user = findUser;
-        next();
-      } else {
-        throw new Error(
-          `This resource is forbidden for user with role ${data.role}!!`
-        );
-      }
-    } else {
-      throw new Error("Token is not even generated !!");
-    }
-  };
 };
 
 /**
@@ -228,7 +206,6 @@ let getHandlerMethod = (route) => {
       ...((request.query || {}).value || {}),
       file: request.file || {},
       user: request.user ? request.user : {},
-      userId: request.userId ? request.userId : {},
       role: request.role ? request.role : {},
     };
     // request handler/controller

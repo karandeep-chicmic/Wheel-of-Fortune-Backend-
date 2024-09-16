@@ -10,6 +10,8 @@ const {
     MESSAGES, ERROR_TYPES, NORMAL_PROJECTION, TOKEN_TYPES
 } = require('../utils/constants');
 const CONSTANTS = require('../utils/constants');
+const commonFunctions = require('../utils/utils');
+const userService = require('./userService');
 
 
 const authService = {};
@@ -88,6 +90,34 @@ authService.userValidate = (authType, roleAccess) => {
         });
     }
 };
+
+
+authService.userAuthentication = (rolesAccess) => {
+    return async (req, res, next) => {
+      try {
+        const token = req?.headers["authorization"]?.split(" ")[1];
+  
+        if (token) {
+          const data = commonFunctions  .decryptJwt(token);
+  
+          const findUser = await userService.findOne({ _id: data.id });
+  
+          if (rolesAccess && rolesAccess.includes(findUser.role)) {
+            req.user = findUser;
+            next();
+          } else {
+            throw new Error(
+              `This resource is forbidden for user with role ${data.role}!!`
+            );
+          }
+        } else {
+          throw new Error("Token is not even generated !!");
+        }
+      } catch (error) {
+        return res.status(401).json({ message: error.message });
+      }
+    };
+  };
 
 
 /*

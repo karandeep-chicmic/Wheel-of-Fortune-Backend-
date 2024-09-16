@@ -10,5 +10,10 @@ module.exports = {
   dbVersionModel: require("./dbVersionModel"),
   adminModel: require("./adminModel"),
   otpModel: require("./otpModel"),
-  symbolsModel:  require("./symbolsModel")
+  symbolsModel: require("./symbolsModel"),
+  gameModel: require("./gameModel"),
+  rtpModel: require("./rtpModel"),
+  walletModel: require("./walletModel"),
+  wheelModel: require("./wheelModel"),
+  transactionModel: require("./transactionModel"),
 };

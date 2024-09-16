@@ -150,4 +150,9 @@ CONSTANTS.SMTP_CREDENTIALS = {
 };
 
 
+CONSTANTS.ACCESS_TYPES = {
+  FREE: 1,
+  PAID: 2,
+}
+
 module.exports = CONSTANTS;

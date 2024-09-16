@@ -9,6 +9,11 @@ const { Schema } = MONGOOSE;
 const rtpSchema = new Schema(
   {
     totalSpins: { type: String, required: true, default: 0 },
+    wheelId:  {
+      type: MONGOOSE.Schema.Types.ObjectId,
+      ref: "wheels",
+      required: true,
+    },
     winingProbability: { type: Number, required: true, default: 0 },
     betLimitation: { type: Number, required: true },
     rtpPercentage: { type: Number, required: true },

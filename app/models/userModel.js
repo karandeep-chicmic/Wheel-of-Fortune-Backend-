@@ -15,6 +15,7 @@ const userSchema = new Schema(
     role: { type: Number, default: 2 },
     isVerified: { type: Boolean, required: true, default: false },
     profilePicture: { type: String, default: "" },
+    deleted: { type: Boolean, default: false },
   },
   { timestamps: true, versionKey: false, collection: "users" }
 );

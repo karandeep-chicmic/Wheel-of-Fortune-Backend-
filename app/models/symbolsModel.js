@@ -14,6 +14,7 @@ const gameSymbolsSchema = new Schema(
     description: { type: String, required: true },
     amountPayout: { type: Number, required: true },
     probability: { type: Number, required: true },
+    deleted: {type: Boolean, default: false}
   },
   { timestamps: true, versionKey: false, collection: "symbols" }
 );

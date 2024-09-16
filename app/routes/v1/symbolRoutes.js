@@ -75,9 +75,9 @@ module.exports = [
       model: "symbols",
 
       query: {
-        id: Joi.string().required(),
+        id: Joi.string().optional(),
       },
     },
-    handler: symbolsController.updateSymbol,
+    handler: symbolsController.findSymbols,
   },
 ];

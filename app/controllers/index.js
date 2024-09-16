@@ -10,5 +10,6 @@ module.exports = {
   userController: require("./userController"),
   otpController: require("./otpController"),
   symbolsController: require("./symbolsController"),
-  fileUploadController:  require("./fileUploadController")
+  fileUploadController: require("./fileUploadController"),
+  wheelController: require("./wheelController"),
 };

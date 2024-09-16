@@ -8,21 +8,16 @@ const {
   SYMBOL_CREATED,
   SYMBOL_FETCHED,
 } = require("../utils/messages");
+const commonFunctions = require("../utils/utils");
 
 const createSymbol = async (payload) => {
-  const {
-    name,
-    symbolsType,
-    imageUrl,
-    description,
-    amountPayout,
-    probability,
-  } = payload;
+  const { name, symbolsType, image, description, amountPayout, probability } =
+    payload;
 
   const createSymbol = await symbolsService.create({
     name: name,
     symbolsType: symbolsType,
-    image: imageUrl,
+    image: image,
     description: description,
     amountPayout: amountPayout,
     probability: probability,
@@ -34,10 +29,14 @@ const createSymbol = async (payload) => {
 const deleteSymbol = async (payload) => {
   const { id } = payload;
 
-  const deleteSymbol = await symbolsService.deleteOne({ _id: id });
+  const deleteSymbol = await symbolsService.findOneAndUpdate(
+    { _id: id },
+    { $set: { deleted: true } },
+    { new: true }
+  );
 
   if (deleteSymbol) {
-    return createSuccessResponse(SYMBOL_DELETED, createSymbol);
+    return createSuccessResponse(SYMBOL_DELETED, deleteSymbol);
   } else {
     return createErrorResponse(BAD_REQUEST, ERROR_TYPES.BAD_REQUEST, {});
   }
@@ -48,7 +47,7 @@ const updateSymbol = async (payload) => {
     id,
     name,
     symbolsType,
-    imageUrl,
+    image,
     description,
     amountPayout,
     probability,
@@ -60,7 +59,7 @@ const updateSymbol = async (payload) => {
       $set: {
         name: name,
         symbolsType: symbolsType,
-        image: imageUrl,
+        image: image,
         description: description,
         amountPayout: amountPayout,
         probability: probability,
@@ -78,8 +77,12 @@ const updateSymbol = async (payload) => {
 
 const findSymbols = async (payload) => {
   const { id } = payload;
-
-  const findSymbols = await symbolsService.findOne({ _id: id });
+  let findSymbols;
+  if (id) {
+    findSymbols = await symbolsService.findOne({ _id: commonFunctions.convertIdToMongooseId(id), deleted: false });
+  } else {
+    findSymbols = await symbolsService.find({ deleted: false });
+  }
 
   if (findSymbols) {
     return createSuccessResponse(SYMBOL_FETCHED, findSymbols);
@@ -88,4 +91,4 @@ const findSymbols = async (payload) => {
   }
 };
 
-module.exports = { createSymbol, deleteSymbol, updateSymbol ,findSymbols};
+module.exports = { createSymbol, deleteSymbol, updateSymbol, findSymbols };

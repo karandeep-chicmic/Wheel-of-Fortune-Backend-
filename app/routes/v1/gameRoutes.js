@@ -15,12 +15,13 @@ module.exports = [
 
       query: {
         wheelId: Joi.string().objectId().required(),
-        userId:Joi.string().objectId().required(),
+        userId: Joi.string().objectId().required(),
       },
 
       body: {
-        betAmount: Joi.number().required() 
-      }
+        betAmount: Joi.number().required(),
+        retryCounter: Joi.number().default(0),
+      },
     },
     handler: gameController.spinTheWheel,
   },

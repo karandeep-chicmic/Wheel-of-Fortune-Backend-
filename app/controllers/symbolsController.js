@@ -76,12 +76,20 @@ const updateSymbol = async (payload) => {
 };
 
 const findSymbols = async (payload) => {
-  const { id } = payload;
+  const { id, index, limit } = payload;
   let findSymbols;
   if (id) {
-    findSymbols = await symbolsService.findOne({ _id: commonFunctions.convertIdToMongooseId(id), deleted: false });
+    findSymbols = await symbolsService.findOne({
+      _id: commonFunctions.convertIdToMongooseId(id),
+      deleted: false,
+    });
   } else {
-    findSymbols = await symbolsService.find({ deleted: false });
+    findSymbols = await symbolsService.find(
+      { deleted: false },
+      {},
+      Number(index) ?? 0,
+      Number(limit) ?? 10
+    );
   }
 
   if (findSymbols) {

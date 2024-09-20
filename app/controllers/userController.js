@@ -1,6 +1,6 @@
 const { createErrorResponse, createSuccessResponse } = require("../helpers");
 const { userService } = require("../services");
-const { ERROR_TYPES, SECURITY } = require("../utils/constants");
+const { ERROR_TYPES, SECURITY, USER_ROLES } = require("../utils/constants");
 const bcrypt = require("bcrypt");
 const {
   USER_ALREADY_EXISTS,
@@ -10,6 +10,9 @@ const {
   VERIFY_EMAIL_BEFORE_LOGIN,
   SUCCESS,
   WRONG_PASSWORD,
+  USER_FETCHED,
+  NOT_FOUND,
+  CANT_UPDATE_OWN_ROLE,
 } = require("../utils/messages");
 const { create } = require("../services/userService");
 const commonFunctions = require("../utils/utils");
@@ -43,6 +46,7 @@ const loginUser = async (payload) => {
       token: token,
       email: userFound.email,
       userId: userFound._id,
+      role: userFound.role,
     });
   } else {
     return createErrorResponse(WRONG_PASSWORD, ERROR_TYPES.UNAUTHORIZED, {});
@@ -87,6 +91,71 @@ const registerUser = async (payload) => {
 
   return createSuccessResponse(USER_ADDED, response);
 };
+
+const getRole = async (payload) => {
+  const { user } = payload;
+  return createSuccessResponse(USER_FETCHED, { role: user.role });
+};
+
+const getAdmins = async (payload) => {
+  const { index, limit, searchString } = payload;
+
+  let criteria = {};
+  if (searchString) {
+    criteria = {
+      $or: [
+        { name: { $regex: searchString, $options: "i" } },
+        { email: { $regex: searchString, $options: "i" } },
+      ],
+    };
+  } else {
+    criteria = { role: 1 };
+  }
+  const admins = await userService.findAndPaging(criteria, index, limit);
+  const adminLength = await userService.count(criteria);
+
+  if (admins.length <= 0) {
+    return createErrorResponse(NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND, {});
+  }
+  return createSuccessResponse(SUCCESS, {
+    adminData: admins,
+    count: adminLength,
+  });
+};
+
+const updateRole = async (payload) => {
+  const { id, user } = payload;
+
+  if (String(id) === String(user._id)) {
+    return createErrorResponse(
+      CANT_UPDATE_OWN_ROLE,
+      ERROR_TYPES.BAD_REQUEST,
+      {}
+    );
+  }
+
+  const getUser = await userService.findOne({
+    _id: commonFunctions.convertIdToMongooseId(id),
+  });
+  let role = 0;
+  if (getUser.role === USER_ROLES.ADMIN) {
+    role = USER_ROLES.USER;
+  } else {
+    role = USER_ROLES.ADMIN;
+  }
+  const updatedRole = await userService.findOneAndUpdate(
+    { _id: commonFunctions.convertIdToMongooseId(id) },
+    { $set: { role: role } },
+    { new: true }
+  );
+
+  if (updatedRole) {
+    return createSuccessResponse(SUCCESS, updatedRole);
+  }
+  return createErrorResponse(NOT_FOUND, ERROR_TYPES.DATA_NOT_FOUND, {});
+};
+
+
 
 // const updatePassword = async (payload) => {
 //   const { userId, oldPassword, newPassword } = payload;
@@ -137,5 +206,8 @@ const registerUser = async (payload) => {
 module.exports = {
   loginUser,
   registerUser,
+  getRole,
+  getAdmins,
+  updateRole,
   //   updatePassword,
 };

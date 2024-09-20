@@ -34,7 +34,6 @@ const otpSend = async (payload) => {
       specialChars: false,
     });
 
-    
     let result = await otpService.findOne({ otp: otp });
     while (result) {
       otp = otpGenerator.generate(6, {
@@ -92,6 +91,7 @@ const otpVerify = async (payload) => {
         token: token,
         email: userFound.email,
         userId: userFound._id,
+        role: userFound.role,
       });
     } else {
       return createErrorResponse(INVALID_OTP, ERROR_TYPES.BAD_REQUEST, {});

@@ -25,4 +25,16 @@ module.exports = [
     },
     handler: gameController.spinTheWheel,
   },
+  {
+    method: "GET",
+    path: "/getGameDetails",
+    auth: true,
+    roleAccess: [USER_ROLES.ADMIN],
+    joiSchemaForSwagger: {
+      group: "GAME",
+      description: "Route for Getting the gameDetails.",
+      model: "Games",
+    },
+    handler: gameController.adminGameDetails,
+  },
 ];

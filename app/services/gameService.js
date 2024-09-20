@@ -59,4 +59,35 @@ gameService.getGames = async (userId, wheelId) => {
 
 gameService.createGame = async (payload) => await gameModel.create(payload);
 
+gameService.getAdminGameDetails = async (payload) =>
+  await gameModel.aggregate([
+    {
+      $sort: {
+        createdAt: -1,
+      },
+    },
+    {
+      $group: {
+        _id: "$winLossStatus",
+        betAmount: { $sum: "$betAmount" },
+        count: { $sum: 1 },
+        outcomeAmount: { $sum: "$outcomeAmount" },
+      },
+    },
+    {
+      $facet: {
+        total: [
+          {
+            $group: {
+              _id: null,
+              betAmount: { $sum: "$betAmount" },
+              outcomeAmount: { $sum: "$outcomeAmount" },
+            },
+          },
+        ],
+        winOrLoss: [],
+      },
+    },
+  ]);
+
 module.exports = gameService;

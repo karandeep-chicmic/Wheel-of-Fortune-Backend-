@@ -1,5 +1,5 @@
 const { userController } = require("../../controllers");
-const { EMAIL_REGEX } = require("../../utils/constants");
+const { EMAIL_REGEX, USER_ROLES } = require("../../utils/constants");
 const { Joi } = require("../../utils/joiUtils");
 
 module.exports = [
@@ -38,4 +38,49 @@ module.exports = [
     },
     handler: userController.loginUser,
   },
+  {
+    method: "GET",
+    path: "/user/role",
+    joiSchemaForSwagger: {
+      group: "USERS",
+      description: "Route for getting user role.",
+      model: "users",
+    },
+    auth: true,
+    roleAccess: [USER_ROLES.USER, USER_ROLES.ADMIN],
+    handler: userController.getRole,
+  },
+  {
+    method: "GET",
+    path: "/admin",
+    joiSchemaForSwagger: {
+      group: "USERS",
+      description: "Route for getting all admins and user with search input",
+      model: "users",
+      query: {
+        limit: Joi.number().min(1).default(10),
+        index: Joi.number().min(0).default(0),
+        searchString: Joi.string().optional(),
+      },
+    },
+    auth: true,
+    roleAccess: [USER_ROLES.ADMIN],
+    handler: userController.getAdmins,
+  },
+  {
+    method: "PUT",
+    path: "/user/updateRole",
+    joiSchemaForSwagger: {
+      group: "USERS",
+      description: "Route for updating user role",
+      model: "users",
+      query: {
+        id: Joi.string().required(),
+      },
+    },
+    auth: true,
+    roleAccess: [USER_ROLES.ADMIN],
+    handler: userController.updateRole,
+  },
+  
 ];

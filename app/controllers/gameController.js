@@ -3,6 +3,7 @@ const { wheelService, rtpService } = require("../services");
 const gameService = require("../services/gameService");
 const { getGames } = require("../services/gameService");
 const CONSTANTS = require("../utils/constants");
+const { SUCCESS } = require("../utils/messages");
 const commonFunctions = require("../utils/utils");
 const { convertIdToMongooseId } = require("../utils/utils");
 
@@ -131,7 +132,7 @@ const spinTheWheel = async (payload) => {
   return createSuccessResponse("working", gameResult);
 };
 
-const handleSymbol=(symbolsArray)=> {
+const handleSymbol = (symbolsArray) => {
   let arrowCount = 0;
   let userOutcome = [];
   let findRandomSymbol;
@@ -153,9 +154,15 @@ const handleSymbol=(symbolsArray)=> {
   }
 
   return userOutcome;
-}
+};
 
+const adminGameDetails = async () => {
+  const gameDetails = await gameService.getAdminGameDetails();
+
+  return createSuccessResponse(SUCCESS, gameDetails);
+};
 
 module.exports = {
   spinTheWheel,
+  adminGameDetails,
 };

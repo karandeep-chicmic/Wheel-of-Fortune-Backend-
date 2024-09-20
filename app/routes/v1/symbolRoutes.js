@@ -1,4 +1,5 @@
 const { symbolsController } = require("../../controllers");
+const { USER_ROLES } = require("../../utils/constants");
 const { Joi } = require("../../utils/joiUtils");
 
 module.exports = [
@@ -6,7 +7,7 @@ module.exports = [
     method: "POST",
     path: "/symbol",
     auth: true,
-    roleAccess: [1],
+    roleAccess: [USER_ROLES.ADMIN],
     joiSchemaForSwagger: {
       group: "SYMBOLS",
       description: "Route for creating a symbol.",
@@ -26,7 +27,7 @@ module.exports = [
   {
     method: "PUT",
     path: "/symbol",
-    roleAccess: [1],
+    roleAccess: [USER_ROLES.ADMIN],
     auth: true,
     // adminAuth: true,
     joiSchemaForSwagger: {
@@ -51,7 +52,7 @@ module.exports = [
   {
     method: "DELETE",
     path: "/symbol/:id",
-    roleAccess: [1],
+    roleAccess: [USER_ROLES.ADMIN],
     auth: true,
     joiSchemaForSwagger: {
       group: "SYMBOLS",
@@ -67,7 +68,7 @@ module.exports = [
   {
     method: "GET",
     path: "/symbol",
-    roleAccess: [1],
+    roleAccess: [USER_ROLES.ADMIN],
     auth: true,
     joiSchemaForSwagger: {
       group: "SYMBOLS",
@@ -76,6 +77,8 @@ module.exports = [
 
       query: {
         id: Joi.string().optional(),
+        limit: Joi.number().optional(),
+        index: Joi.number().optional(),
       },
     },
     handler: symbolsController.findSymbols,

@@ -74,6 +74,8 @@ module.exports = [
       model: "wheels",
       query: {
         id: Joi.string().optional(),
+        index: Joi.number().optional(),
+        limit: Joi.number().optional(),
       },
     },
     handler: wheelController.getWheel,

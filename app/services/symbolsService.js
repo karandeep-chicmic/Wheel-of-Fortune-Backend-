@@ -19,7 +19,7 @@ symbolsService.insertMany = async (payload) => await symbolsModel.insertMany(pay
 /**
 * function to find.
 */
-symbolsService.find = async ( criteria, projection = {}) => await symbolsModel.find(criteria, projection).lean();
+symbolsService.find = async ( criteria,projection, index, limit) => await symbolsModel.find(criteria, projection).skip(index).limit(limit);
 
 /**
 * function to find one.

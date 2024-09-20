@@ -36,6 +36,8 @@ module.exports = {
   SAME_CURRENT_AND_OLD_PASSWORD:
     "Current password and old password cannot be same.",
   NOT_FOUND: "Data not found.",
+
+  CANT_UPDATE_OWN_ROLE:"User cant update his own role",
   ACCOUNT_NOT_ACTIVE: "This account is not active anymore",
   LOGGED_OUT_SUCCESSFULLY: "Logged out successfully.",
   PROFILE_UPDATE_SUCCESSFULLY: "Profile updated successfully.",
@@ -56,6 +58,7 @@ module.exports = {
   FORGOT_PASSWORD_EMAIL_SENT_SUCCESSFULLY:
     "Forget password email sent successfully",
   WRONG_PASSWORD: "Wrong Password !!",
+  USER_FETCHED: "User Details Fetched Successfully",
   BAD_REQUEST: "Bad Request",
   INVALID_OTP: "OTP is Invalid",
   GENERATE_OTP_FIRST: "Generate Otp First",

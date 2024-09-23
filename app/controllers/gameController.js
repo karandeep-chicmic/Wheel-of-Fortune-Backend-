@@ -8,8 +8,9 @@ const commonFunctions = require("../utils/utils");
 const { convertIdToMongooseId } = require("../utils/utils");
 
 const spinTheWheel = async (payload) => {
-  const { wheelId, userId, betAmount, retryCounter } = payload;
+  const { wheelId, user, betAmount, retryCounter } = payload;
 
+  const userId = user._id;
   // user outcome to return
   let userOutcome = [];
   let userReward = 0;

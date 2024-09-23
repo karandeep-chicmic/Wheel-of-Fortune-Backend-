@@ -97,7 +97,7 @@ const getRole = async (payload) => {
   return createSuccessResponse(USER_FETCHED, { role: user.role });
 };
 
-const getAdmins = async (payload) => {
+const getUsers = async (payload) => {
   const { index, limit, searchString } = payload;
 
   let criteria = {};
@@ -207,7 +207,7 @@ module.exports = {
   loginUser,
   registerUser,
   getRole,
-  getAdmins,
+  getUsers,
   updateRole,
   //   updatePassword,
 };

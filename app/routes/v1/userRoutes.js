@@ -65,7 +65,7 @@ module.exports = [
     },
     auth: true,
     roleAccess: [USER_ROLES.ADMIN],
-    handler: userController.getAdmins,
+    handler: userController.getUsers,
   },
   {
     method: "PUT",
@@ -82,5 +82,4 @@ module.exports = [
     roleAccess: [USER_ROLES.ADMIN],
     handler: userController.updateRole,
   },
-  
 ];

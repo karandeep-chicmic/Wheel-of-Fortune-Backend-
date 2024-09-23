@@ -7,7 +7,7 @@ module.exports = [
     method: "POST",
     path: "/spinTheWheel",
     auth: true,
-    roleAccess: [USER_ROLES.ADMIN],
+    roleAccess: [USER_ROLES.ADMIN, USER_ROLES.USER],
     joiSchemaForSwagger: {
       group: "GAME",
       description: "Route for Spining the wheel.",
@@ -15,7 +15,6 @@ module.exports = [
 
       query: {
         wheelId: Joi.string().objectId().required(),
-        userId: Joi.string().objectId().required(),
       },
 
       body: {

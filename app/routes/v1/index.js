@@ -10,7 +10,8 @@ const v1Routes = [
   ...require("./symbolRoutes"),
   ...require("./fileUploadRoutes"),
   ...require("./wheelRoutes"),
-  ...require("./gameRoutes")
+  ...require("./gameRoutes"),
+  ...require("./rtpRoutes"),
 ];
 
 module.exports = v1Routes;

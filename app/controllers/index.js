@@ -13,4 +13,5 @@ module.exports = {
   fileUploadController: require("./fileUploadController"),
   wheelController: require("./wheelController"),
   gameController: require("./gameController"),
+  rtpController: require("./rtpController")
 };

@@ -18,7 +18,7 @@ module.exports = [
         symbols: Joi.array().description("Symbols array").required(),
         name: Joi.string().description("Wheel name").required(),
         description: Joi.string().description("Wheel description").required(),
-        accessType: Joi.number().description("Wheel Access Type").required(),
+        accessType: Joi.number().description("Wheel Access Type").optional(),
       },
     },
     handler: wheelController.createWheel,

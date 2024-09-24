@@ -8,7 +8,7 @@ const commonFunctions = require("../utils/utils");
 const { convertIdToMongooseId } = require("../utils/utils");
 
 const spinTheWheel = async (payload) => {
-  const { wheelId, user, betAmount, retryCounter } = payload;
+  var { wheelId, user, betAmount, retryCounter } = payload;
 
   const userId = user._id;
   // user outcome to return
@@ -36,7 +36,7 @@ const spinTheWheel = async (payload) => {
   }
 
   // if win then positive if loss than negative
-  if (userOutcome[userOutcome.length - 1].symbolsType === 1) {
+  if (userOutcome[userOutcome.length - 1].amountPayout * betAmount < betAmount) {
     userReward = -userOutcome[userOutcome.length - 1].amountPayout * betAmount;
   } else {
     userReward = userOutcome[userOutcome.length - 1].amountPayout * betAmount;
@@ -63,12 +63,27 @@ const spinTheWheel = async (payload) => {
   second: if we want to check according to table, 
   third: if calculated rtp is less than given rtp of user
   */
+
+  let rtpToCheck = 0;
+  let findGlobalRtp = await rtpService.findGlobal();
+
+  if (findRtpOfUser.globalRtp && findGlobalRtp.length > 0 && findGlobalRtp[0].globalRtp) {
+    //  for global 
+    rtpToCheck = findGlobalRtp[0].globalRtpPercentage
+  } else if (!findRtpOfUser.globalRtp) {
+    //  for user specific rtp
+    rtpToCheck = findRtpOfUser.rtpPercentage
+  } else if (findRtpOfUser.globalRtp && findGlobalRtp.length > 0 && !findGlobalRtp?.[0].globalRtp) {
+    //  according to the rtp table
+    rtpToCheck = getRTPForSpins(findRtpOfUser.totalSpins + 1)
+  }
+
   if (
     (findRtpOfUser.rtpCheck ||
       Object.keys(CONSTANTS.MINIMUM_RTP_CALCULATION).includes(
-        findRtpOfUser.totalSpins + 1
+        String(findRtpOfUser.totalSpins + 1)
       )) &&
-    getGame[0].rtp < findRtpOfUser.rtpPercentage
+    getGame[0].rtp < rtpToCheck
   ) {
     // if reward is negative then i want to rerun the function till i get positive
     const maxRetries = 10;
@@ -131,6 +146,25 @@ const spinTheWheel = async (payload) => {
 
   // create success response
   return createSuccessResponse("working", gameResult);
+};
+
+const getRTPForSpins = (spins) => {
+  const spinKeys = Object.keys(CONSTANTS.MINIMUM_RTP_CALCULATION)
+    .map(Number) // Convert keys to numbers
+    .sort((a, b) => a - b); // Sort in ascending order
+
+  let matchedKey = spinKeys[0]; // Default to the first key
+
+  // Find the largest key that is less than or equal to the number of spins
+  for (const key of spinKeys) {
+    if (spins >= key) {
+      matchedKey = key;
+    } else {
+      break; // Stop once we've passed the number of spins
+    }
+  }
+
+  return CONSTANTS.MINIMUM_RTP_CALCULATION[matchedKey];
 };
 
 const handleSymbol = (symbolsArray) => {

@@ -23,6 +23,11 @@ const rtpSchema = new Schema(
       ref: "users",
       required: true,
     },
+    globalRtp: {
+      type: Boolean,
+      required: true,
+      default: true,
+    }
   },
   { timestamps: true, versionKey: false, collection: "rtp" }
 );

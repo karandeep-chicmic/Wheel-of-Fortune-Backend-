@@ -163,6 +163,7 @@ CONSTANTS.MINIMUM_RTP_CALCULATION = {
   20: 95,
   30: 90,
   40: 80,
+  43: 80,
   50: 70,
   60: 55,
   70: 50,

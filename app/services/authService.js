@@ -114,7 +114,7 @@ authService.userAuthentication = (rolesAccess) => {
           throw new Error("Token is not even generated !!");
         }
       } catch (error) {
-        return res.status(401).json({ message: error.message });
+        return res.status(401).json({ message: error?.message });
       }
     };
   };

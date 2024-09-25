@@ -12,6 +12,7 @@ const v1Routes = [
   ...require("./wheelRoutes"),
   ...require("./gameRoutes"),
   ...require("./rtpRoutes"),
+  ...require("./transactionsRoutes")
 ];
 
 module.exports = v1Routes;

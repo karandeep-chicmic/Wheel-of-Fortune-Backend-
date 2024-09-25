@@ -16,4 +16,5 @@ module.exports = {
   // gameService: require("./gameService"),
   rtpService: require("./rtpService"),
   // stripeService: require('./stripeService'),
+  transactionService: require("./transactionService")
 };

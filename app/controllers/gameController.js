@@ -104,7 +104,7 @@ const spinTheWheel = async (payload) => {
       return await spinTheWheel(payload);
     }
   } else if (
-    (getGame[0]?.rtp ?? 0) > findRtpOfUser?.rtpPercentage &&
+    (getGame[0]?.rtp ?? 0) > rtpToCheck &&
     findRtpOfUser.rtpCheck
   ) {
     await rtpService.updateOne(

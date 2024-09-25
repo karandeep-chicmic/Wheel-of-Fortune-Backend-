@@ -4,7 +4,7 @@ const MODELS = require("../models");
 const CONFIG = require("../../config");
 const { hashPassword } = require("../utils/utils");
 const CONSTANTS = require("./constants");
-const { userService } = require("../services");
+const { userService, transactionService } = require("../services");
 
 const dbMigrations = {};
 
@@ -37,7 +37,15 @@ dbMigrations.createAdmin = async () => {
     role: 1,
     isVerified: true,
   };
-  await userService.create(data);
+
+
+  const admin = await userService.create(data);
+  const walletData = {
+    userId: admin._id,
+    credits: CONSTANTS.DEFAULT_CREDITS,
+    companyAccount: true
+  }
+  await transactionService.createWallet(walletData);
   return;
 };
 

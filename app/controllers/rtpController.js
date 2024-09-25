@@ -1,10 +1,11 @@
 const { createSuccessResponse, createErrorResponse } = require("../helpers");
 const rtpService = require("../services/rtpService");
 const { MESSAGES, ERROR_TYPES } = require("../utils/constants");
-const { BAD_REQUEST } = require("../utils/messages");
+const { BAD_REQUEST, FAILURE } = require("../utils/messages");
 
 
 const setGlobalRtp = async (payload) => {
+
     const { rtpPercentage } = payload;
 
     let condition = {
@@ -16,7 +17,7 @@ const setGlobalRtp = async (payload) => {
     if (rtpPercentage) {
         condition = {
             $set: {
-                rtpPercentage: rtpPercentage,
+                globalRtpPercentage: rtpPercentage,
                 globalRtp: true
 
             }
@@ -46,7 +47,19 @@ const setUserRtp = async (payload) => {
 
 }
 
+const getGlobalRtp = async (payload) => {
+    const findGlobalRtp = await rtpService.findGlobal();
+
+
+    if (findGlobalRtp.length) {
+        return createSuccessResponse(MESSAGES.SUCCESS, findGlobalRtp[0])
+    }
+    return createErrorResponse(FAILURE, ERROR_TYPES.BAD_REQUEST, {})
+}
+
+
 module.exports = {
     setGlobalRtp,
-    setUserRtp
+    setUserRtp,
+    getGlobalRtp
 }

@@ -15,7 +15,7 @@ rtpService.updateMany = async (criteria, toUpdate) =>
 
 // Global RTP
 rtpService.updateOneGlobal = async (criteria, toUpdate, options) =>
-  await globalRtpModel.findOneAndUpdate(criteria, toUpdate, options);
+  await globalRtpModel.updateOne(criteria, toUpdate, options);
 rtpService.findGlobal = async () => await globalRtpModel.find()
 
 module.exports = rtpService;

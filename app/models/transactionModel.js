@@ -15,7 +15,8 @@ const transactionModelSchema = new Schema(
     },
     paymentType: { type: Number, required: true, default: 0 },
     amount: { type: Number, required: true, default: 0 },
-    transactionId: { type: String, required: true },
+    approved: { type: Boolean, required: true, default: false },
+    transactionId: { type: String, required: false, default: "" },
   },
   { timestamps: true, versionKey: false, collection: "transactions" }
 );

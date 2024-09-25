@@ -13,7 +13,8 @@ const walletModelSchema = new Schema(
       ref: "users",
       required: true,
     },
-    credits: { type: Array, required: true, default: 0 },
+    credits: { type: Number, required: true, default: 0 },
+    companyAccount: {type: Boolean, required: true, default: false}
   },
   { timestamps: true, versionKey: false, collection: "wallets" }
 );

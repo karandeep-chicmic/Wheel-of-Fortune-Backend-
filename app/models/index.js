@@ -16,5 +16,6 @@ module.exports = {
   walletModel: require("./walletModel"),
   wheelModel: require("./wheelModel"),
   transactionModel: require("./transactionModel"),
-  globalRtpModel: require("./globalRtpModel")
+  globalRtpModel: require("./globalRtpModel"),
+  debtModel: require("./debtModel"),
 };

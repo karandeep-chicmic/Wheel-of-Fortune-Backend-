@@ -14,10 +14,24 @@ module.exports = [
             model: "globalRtp",
 
             body: {
-                rtpPercentage: Joi.string().optional(),
+                rtpPercentage: Joi.number().optional(),
             },
         },
         handler: rtpController.setGlobalRtp,
+    },
+    {
+        method: "GET",
+        path: "/globalRtp",
+        auth: true,
+        roleAccess: [USER_ROLES.ADMIN],
+        joiSchemaForSwagger: {
+            group: "Global rtp",
+            description: "Route for getting the global RTP.",
+            model: "globalRtp",
+
+        },
+        handler: rtpController.getGlobalRtp,
+
     },
     {
         method: "POST",
@@ -33,7 +47,7 @@ module.exports = [
                 usersId: Joi.string().optional(),
             },
             body: {
-                rtpPercentage: Joi.string().optional(),
+                rtpPercentage: Joi.number().optional(),
             },
         },
         handler: rtpController.setUserRtp,

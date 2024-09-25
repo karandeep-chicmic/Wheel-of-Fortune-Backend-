@@ -75,4 +75,5 @@ module.exports = {
   WHEEL_DELETED: "Wheel Deleted Successfully",
   WHEEL_NOT_FOUND: "Wheel Not Found",
   WHEEL_FETCHED: "Wheel Fetched Successfully",
+  ADMIN_NEEDS_ADD_MONEY: "Admin needs to add money !!"
 };
